@@ -1,58 +1,86 @@
 # Bob — Assistente Financeiro
 
-Projeto de TCC em Streamlit com autenticação, perfil financeiro persistente em MySQL e chat local via Ollama.
+Aplicação web para TCC com frontend em HTML/CSS/JavaScript puro, backend Python/FastAPI, MySQL e IA local com Ollama (`gpt-oss:latest`). O navegador conversa apenas com o FastAPI; este encaminha o stream ao Ollama.
 
-## Arquitetura
+## Funcionalidades
 
-- `src/chatbot.py`: interface Streamlit (cadastro, login, perfil, dashboard e chat).
-- `src/database.py`: conexão MySQL, hash de senha e acesso aos dados com queries parametrizadas.
-- `database/schema.sql`: schema reproduzível do MySQL Community Server.
-- `data/`: catálogo de produtos e dados demonstrativos já existentes.
+- **Autenticação**: cadastro e login com senha em `bcrypt` e sessão via cookie `HttpOnly`.
+- **Perfil financeiro**: renda, gastos por categoria, dívidas, reserva de emergência, investimentos, objetivo (com opção "Outro") e tolerância a risco (conservador, moderado, arrojado).
+- **Dashboard**: cards de renda, gastos, disponível mensal, percentual de renda comprometida e meses de reserva, além de um gráfico de barras por categoria de gasto — tudo calculado no servidor.
+- **Chat com o Bob**: respostas em streaming (NDJSON) geradas pelo Ollama, sempre baseadas no perfil salvo e no catálogo de produtos filtrado pela tolerância a risco do usuário, para evitar recomendações fora do perfil ou informações inventadas.
 
-## Configuração
+## Estrutura
 
-1. Instale e inicie o MySQL Community Server.
-2. Execute `database/schema.sql` no MySQL Workbench ou no terminal:
+- `src/main.py`: FastAPI, sessão autenticada e API REST (`/docs`).
+- `src/database.py`: MySQL, bcrypt e queries parametrizadas.
+- `src/chatbot.py`: regras de negócio, métricas, prompt e streaming do Ollama.
+- `templates/`: telas separadas de login, cadastro, dashboard, perfil e chat.
+- `static/js/`: scripts específicos por tela e utilitários compartilhados.
+- `static/css/`: estilos da interface.
+- `database/schema.sql`: script de criação do banco MySQL.
+- `data/produtos_financeiros.json`: catálogo usado pelo filtro de risco.
+- `tests/`: testes automatizados (`unittest`) do contexto enviado ao Bob.
+- `docs/`: documentação do TCC (caso de uso, base de conhecimento, prompts, métricas e pitch).
+- `examples/`: protótipo inicial em Streamlit, mantido apenas como referência histórica do projeto.
 
-   ```powershell
-   mysql -u root -p < database/schema.sql
-   ```
+## Instalação e execução
 
-3. Copie `.env.example` para `.env` e informe as credenciais locais:
+1. No MySQL Community Server, execute `database/schema.sql` para criar o banco `agente_financeiro_bob` e as tabelas.
+2. Copie `.env.example` para `.env`, preencha as credenciais locais do MySQL.
+3. Crie o ambiente e instale dependências:
 
-   ```env
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_USER=root
-   DB_PASSWORD=sua_senha
-   DB_NAME=agente_financeiro_bob
-   ```
-
-4. Crie e ative um ambiente virtual, instale as dependências e execute:
-
-   ```powershell
+```powershell
    py -m venv .venv
    .\.venv\Scripts\Activate.ps1
    pip install -r requirements.txt
-   streamlit run src/chatbot.py
-   ```
+```
 
-O chat depende opcionalmente de um Ollama local em `http://localhost:11434` com o modelo configurado no código. Cadastro, login, perfil e dashboard funcionam independentemente dele.
+   No Linux/macOS:
 
-## Fluxo e testes manuais
+```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+```
 
-1. Crie uma conta com nome, e-mail válido, senha de oito ou mais caracteres e confirmação igual.
-2. Tente cadastrar o mesmo e-mail: o sistema deve informar duplicidade.
-3. Tente senhas diferentes: o cadastro deve bloquear.
-4. Entre com credenciais corretas e depois teste uma senha incorreta.
-5. No primeiro acesso, preencha e salve o perfil. Valores negativos são bloqueados pelos campos; renda igual a zero e dívida marcada sem valor também são recusadas.
-6. Edite o perfil no dashboard e confirme a atualização dos indicadores.
-7. Saia pelo botão **Sair**, entre com outra conta e confirme que os dados não aparecem: toda leitura/gravação usa o `usuario_id` da sessão autenticada.
+4. Instale/inicie o Ollama e obtenha o modelo:
 
-## Segurança e preparação para IA
+```powershell
+   ollama pull gpt-oss:latest
+   ollama serve
+```
 
-- Senhas usam `bcrypt`; nenhum texto puro é armazenado.
-- Credenciais ficam somente no `.env`, que está ignorado pelo Git.
-- O banco tem e-mail único e chave estrangeira entre `usuarios` e `perfil_financeiro`.
-- As queries usam parâmetros, evitando SQL injection.
-- `profile_for_ai()` produz um resumo calculado e pronto para uma integração futura, sem enviar dados a serviços externos.
+5. Inicie o sistema:
+
+```powershell
+   uvicorn src.main:app --reload
+```
+
+Abra `http://127.0.0.1:8000`; não há servidor de frontend separado. Teste APIs em `http://127.0.0.1:8000/docs`.
+
+## Principais endpoints
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/api/auth/register` | Cria uma conta nova |
+| POST | `/api/auth/login` | Autentica e inicia a sessão |
+| POST | `/api/auth/logout` | Encerra a sessão |
+| GET | `/api/auth/me` | Retorna o usuário autenticado |
+| GET / PUT | `/api/profile` | Consulta ou salva o perfil financeiro |
+| GET | `/api/dashboard` | Perfil + métricas calculadas para o painel |
+| POST | `/api/chat/stream` | Envia uma mensagem e recebe a resposta do Bob em streaming |
+| GET | `/api/health` | Verifica se a API e o banco estão configurados |
+
+A lista completa e interativa fica em `/docs` (Swagger UI).
+
+## Teste completo
+
+1. Crie uma conta (senha de ao menos oito caracteres) e entre.
+2. Salve um perfil incluindo condições de dívida, objetivo e risco.
+3. Confira cards e gráfico no dashboard; edite o perfil e confirme a atualização.
+4. Envie uma pergunta no chat. A resposta chega progressivamente por `/api/chat/stream`.
+5. Use **Sair**, reinicie o servidor e entre novamente. O perfil fica no MySQL; o histórico do chat é mantido intencionalmente somente na sessão da página.
+
+## Segurança
+
+Senhas usam `bcrypt`; a sessão fica em cookie `HttpOnly`; o banco usa queries parametrizadas; respostas não retornam hash de senha ou configurações do `.env`. Em produção HTTPS, defina `COOKIE_SECURE=true`.

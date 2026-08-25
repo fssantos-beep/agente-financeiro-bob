@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Conversar com Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <main id="app-view">
+        <!-- Mesma navegação das páginas privadas para manter a experiência consistente. -->
+        <aside class="sidebar">
+            <a class="logo" href="/dashboard">
+                <span class="brand-mark">B</span> Bob
+            </a>
+            <nav>
+                <a class="nav-link" href="/dashboard">⌂ <span>Visão geral</span></a>
+                <a class="nav-link" href="/perfil">◎ <span>Perfil financeiro</span></a>
+                <a class="nav-link active" href="/chat">✦ <span>Conversar com Bob</span></a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div id="user-name" class="user-chip"></div>
+                <button id="logout" class="ghost">Sair</button>
+            </div>
+        </aside>
+        <section class="content">
+            <header>
+                <button id="menu-toggle" class="menu" aria-label="Abrir menu">☰</button>
+                <div>
+                    <p class="eyebrow">BOB — ASSISTENTE FINANCEIRO</p>
+                    <h2>Conversar com Bob</h2>
+                </div>
+            </header>
+            <div id="app-notice" role="alert"></div>
+            
+            <!-- A área cresce para ocupar a tela e o formulário fica no final da conversa. -->
+            <section class="page chat-page">
+                <div class="chat-intro">
+                    <p class="eyebrow">CONVERSA PRIVADA</p>
+                    <h1>Como posso ajudar?</h1>
+                    <p>O Bob usa seu perfil financeiro e apresenta informações educacionais.</p>
+                </div>
+                <div id="chat-messages" class="chat-messages"></div>
+                <form id="chat-form" class="chat-input">
+                    <textarea id="chat-text" placeholder="Digite sua pergunta financeira..." rows="1" maxlength="4000"></textarea>
+                    <button class="primary">Enviar ↑</button>
+                </form>
+            </section>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

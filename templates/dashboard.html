@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dashboard | Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <main id="app-view">
+        <!-- Navegação compartilhada entre as áreas protegidas da aplicação. -->
+        <aside class="sidebar">
+            <a class="logo" href="/dashboard">
+                <span class="brand-mark">B</span> Bob
+            </a>
+            <nav>
+                <a class="nav-link active" href="/dashboard">⌂ <span>Visão geral</span></a>
+                <a class="nav-link" href="/perfil">◎ <span>Perfil financeiro</span></a>
+                <a class="nav-link" href="/chat">✦ <span>Conversar com Bob</span></a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div id="user-name" class="user-chip"></div>
+                <button id="logout" class="ghost">Sair</button>
+            </div>
+        </aside>
+        
+        <!-- Os indicadores e as barras são preenchidos por dashboard.js apartir da API. -->
+        <section class="content">
+            <header>
+                <button id="menu-toggle" class="menu" aria-label="Abrir menu">☰</button>
+                <div>
+                    <p class="eyebrow">BOB — ASSISTENTE FINANCEIRO</p>
+                    <h2>Visão geral</h2>
+                </div>
+            </header>
+            <div id="app-notice" role="alert"></div>
+            <section class="page">
+                <div class="hero">
+                    <div>
+                        <p class="eyebrow">SEU PANORAMA</p>
+                        <h1 id="greeting">Olá!</h1>
+                        <p>Informações claras para você tomar decisões melhores.</p>
+                    </div>
+                    <a class="primary" href="/perfil">Atualizar perfil</a>
+                </div>
+                <div id="metric-cards" class="metrics"></div>
+                <section class="panel chart-panel">
+                    <div>
+                        <h3>Distribuição dos gastos</h3>
+                        <p>Veja onde seu dinheiro está sendo destinado.</p>
+                    </div>
+                    <div id="expenses-chart" class="bar-chart"></div>
+                </section>
+            </section>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

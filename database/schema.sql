@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS perfil_financeiro (
     outros_gastos DECIMAL(12,2) NOT NULL DEFAULT 0,
     possui_dividas BOOLEAN NOT NULL DEFAULT FALSE,
     valor_dividas DECIMAL(12,2) NOT NULL DEFAULT 0,
-    tipo_divida VARCHAR(120) NULL,
     juros_divida DECIMAL(5,2) NULL,
     reserva_emergencia DECIMAL(12,2) NOT NULL DEFAULT 0,
     possui_investimentos BOOLEAN NOT NULL DEFAULT FALSE,

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Criar conta | Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- A interface é compartilhada com o login, mas o formulário é exclusivo do cadastro. -->
+    <main class="auth-shell">
+        <section class="brand">
+            <span class="brand-mark">B</span>
+            <h1>Bob</h1>
+            <p>Comece a organizar sua vida financeira com mais confiança.</p>
+        </section>
+
+        <section class="auth-card">
+            <p class="eyebrow">PRIMEIRO ACESSO</p>
+            <h2>Crie sua conta</h2>
+            <!-- A API devolve aqui as validações de e-mail, senha e duplicidade. -->
+            <div id="notice" role="alert"></div>
+            <form id="register-form">
+                <label>Nome
+                    <input name="nome" required maxlength="120" autocomplete="name">
+                </label>
+                <label>E-mail
+                    <input name="email" type="email" required autocomplete="email">
+                </label>
+                <label>Senha
+                    <input name="senha" type="password" minlength="8" required autocomplete="new-password">
+                    <small>Mínimo de 8 caracteres.</small>
+                </label>
+                <label>Confirmação de senha
+                    <input name="confirmacao_senha" type="password" minlength="8" required autocomplete="new-password">
+                </label>
+                <button class="primary">Criar minha conta <span>→</span></button>
+            </form>
+            <p class="auth-link">Já possui uma conta? <a href="/login">Voltar para entrar</a></p>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/cadastro.js"></script>
+</body>
+</html>

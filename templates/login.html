@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Entrar | Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Apresentação da marca mantida ao lado do acesso em telas maiores. -->
+    <main class="auth-shell">
+        <section class="brand">
+            <span class="brand-mark">B</span>
+            <h1>Bob</h1>
+            <p>Seu assistente financeiro pessoal, com clareza para suas decisões.</p>
+        </section>
+        
+        <!-- O aviso é preenchido pelo JavaScript quando a autenticação falha. -->
+        <section class="auth-card">
+            <p class="eyebrow">BEM-VINDO DE VOLTA</p>
+            <h2>Entrar na sua conta</h2>
+            <div id="notice" role="alert"></div>
+            <form id="login-form">
+                <label>E-mail
+                    <input name="email" type="email" required autocomplete="email">
+                </label>
+                <label>Senha
+                    <input name="senha" type="password" required autocomplete="current-password">
+                </label>
+                <button class="primary">Entrar <span>→</span></button>
+            </form>
+            <p class="auth-link">Ainda não tem conta? <a href="/cadastro">Criar conta</a></p>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/login.js"></script>
+</body>
+</html>

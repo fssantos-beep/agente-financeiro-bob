@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Perfil financeiro | Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <main id="app-view">
+        <!-- A barra lateral mantém o contexto de navegação enquanto o usuário edita o perfil. -->
+        <aside class="sidebar">
+            <a class="logo" href="/dashboard">
+                <span class="brand-mark">B</span> Bob
+            </a>
+            <nav>
+                <a class="nav-link" href="/dashboard">⌂ <span>Visão geral</span></a>
+                <a class="nav-link active" href="/perfil">◎ <span>Perfil financeiro</span></a>
+                <a class="nav-link" href="/chat">✦ <span>Conversar com Bob</span></a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div id="user-name" class="user-chip"></div>
+                <button id="logout" class="ghost">Sair</button>
+            </div>
+        </aside>
+        <section class="content">
+            <header>
+                <button id="menu-toggle" class="menu" aria-label="Abrir menu">☰</button>
+                <div>
+                    <p class="eyebrow">BOB — ASSISTENTE FINANCEIRO</p>
+                    <h2>Perfil financeiro</h2>
+                </div>
+            </header>
+            <div id="app-notice" role="alert"></div>
+            <section class="page">
+                <div class="section-heading">
+                    <p class="eyebrow">SEUS DADOS</p>
+                    <h1>Perfil financeiro</h1>
+                    <p>Estas informações orientam os cálculos e recomendações do Bob.</p>
+                </div>
+                
+                <!-- Os campos de renda e gastos são criados pelo script para usar os mesmos nomes da API. -->
+                <form id="profile-form" class="profile-form">
+                    <fieldset>
+                        <legend>Renda e gastos mensais</legend>
+                        <div class="form-grid" id="expense-fields"></div>
+                    </fieldset>
+
+                    <!-- Dívidas e investimentos são campos opcionais para não pedir dados que o usuário não possui. -->
+                    <fieldset>
+                        <legend>Dívidas, reserva e investimentos</legend>
+                        <div class="form-grid">
+                            <label class="full check">Possuo dívidas
+                                <input name="possui_dividas" type="checkbox">
+                            </label>
+                            <label>Valor aproximado das dívidas (R$)
+                                <input name="valor_dividas" type="number" min="0" step="0.01">
+                            </label>
+                            <label>Taxa de juros mensal aproximada (%)
+                                <input name="juros_divida" type="number" min="0" max="100" step="0.1">
+                            </label>
+                            <label>Valor guardado para emergências (R$)
+                                <input name="reserva_emergencia" type="number" min="0" step="0.01" required>
+                            </label>
+                            <label class="full check">Possuo investimentos
+                                <input name="possui_investimentos" type="checkbox">
+                            </label>
+                            <label>Valor aproximado investido (R$)
+                                <input name="valor_investido" type="number" min="0" step="0.01">
+                            </label>
+                            <label>Tipo(s) de investimentos
+                                <input name="tipos_investimentos" maxlength="255" placeholder="Ex.: CDB, Tesouro Selic">
+                            </label>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Objetivos e tolerância a risco</legend>
+                        <div class="form-grid">
+                            <label>Objetivo principal
+                                <select name="objetivo_financeiro" id="objective"></select>
+                            </label>
+                            <label id="other-objective">Descreva o outro objetivo
+                                <input name="objetivo_outro" maxlength="255">
+                            </label>
+                            <label>Tolerância a risco
+                                <select name="tolerancia_risco">
+                                    <option value="conservador">Conservador</option>
+                                    <option value="moderado">Moderado</option>
+                                    <option value="arrojado">Arrojado</option>
+                                </select>
+                            </label>
+                        </div>
+                    </fieldset>
+                    <button class="primary">Salvar perfil</button>
+                </form>
+            </section>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/perfil.js"></script>
+</body>
+</html>

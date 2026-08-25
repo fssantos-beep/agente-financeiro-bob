@@ -1,5 +1,0 @@
-1) abrir cmd na pasta do projeto
-
-2) iniciar o ambiente virtual: .venv\Scripts\activate
-
-3) streamlit run src/chatbot.py
