@@ -43,10 +43,12 @@ class ProfileContextTests(unittest.TestCase):
         self.assertNotIn("Detalhamento do objetivo:", context)
 
     def test_other_objective_is_validated_and_sent_to_bob(self):
-        payload = ProfilePayload(**profile(
-            objetivo_financeiro="outro",
-            objetivo_outro="  Fazer intercâmbio em dois anos.  ",
-        ))
+        payload = ProfilePayload(
+            **profile(
+                objetivo_financeiro="outro",
+                objetivo_outro="  Fazer intercâmbio em dois anos.  ",
+            )
+        )
         self.assertEqual(payload.objetivo_outro, "Fazer intercâmbio em dois anos.")
 
         context = build_prompt(

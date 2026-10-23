@@ -1,4 +1,5 @@
 """Acesso ao MySQL e operações restritas ao usuário autenticado."""
+
 import os
 from decimal import Decimal
 
@@ -24,8 +25,10 @@ def get_connection():
     if error:
         raise RuntimeError(error)
     return mysql.connector.connect(
-        host=os.environ["DB_HOST"], port=int(os.environ["DB_PORT"]),
-        user=os.environ["DB_USER"], password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=int(os.environ["DB_PORT"]),
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
         database=os.environ["DB_NAME"],
         charset="utf8mb4",
     )
@@ -57,7 +60,9 @@ def authenticate(email, password):
     conn = get_connection()
     try:
         with conn.cursor(dictionary=True) as cursor:
-            cursor.execute("SELECT id, nome, email, senha_hash FROM usuarios WHERE email = %s", (email.strip().lower(),))
+            cursor.execute(
+                "SELECT id, nome, email, senha_hash FROM usuarios WHERE email = %s", (email.strip().lower(),)
+            )
             user = cursor.fetchone()
         if user and bcrypt.checkpw(password.encode(), user["senha_hash"].encode()):
             # Não deixa o hash seguir para a camada de API ou para a sessão.
@@ -82,11 +87,26 @@ def get_financial_profile(user_id):
 def save_financial_profile(user_id, profile):
     # A lista explícita evita que campos inesperados enviados pela API entrem na query.
     columns = [
-        "renda_mensal", "gastos_moradia", "gastos_alimentacao", "gastos_transporte",
-        "gastos_educacao", "gastos_saude", "gastos_lazer", "gastos_contas", "outros_gastos",
-        "possui_dividas", "valor_dividas", "juros_divida", "reserva_emergencia",
-        "possui_investimentos", "valor_investido", "tipos_investimentos", "objetivo_financeiro",
-        "objetivo_outro", "tolerancia_risco", "valor_disponivel_investimento",
+        "renda_mensal",
+        "gastos_moradia",
+        "gastos_alimentacao",
+        "gastos_transporte",
+        "gastos_educacao",
+        "gastos_saude",
+        "gastos_lazer",
+        "gastos_contas",
+        "outros_gastos",
+        "possui_dividas",
+        "valor_dividas",
+        "juros_divida",
+        "reserva_emergencia",
+        "possui_investimentos",
+        "valor_investido",
+        "tipos_investimentos",
+        "objetivo_financeiro",
+        "objetivo_outro",
+        "tolerancia_risco",
+        "valor_disponivel_investimento",
     ]
     values = [profile.get(column) for column in columns]
     update = ", ".join(f"{column} = VALUES({column})" for column in columns)
@@ -107,10 +127,19 @@ def save_financial_profile(user_id, profile):
 
 def profile_for_ai(user, profile):
     # Resume somente o contexto que ajuda o Bob, em vez de enviar o registro inteiro.
-    expenses = sum(Decimal(str(profile[key])) for key in (
-        "gastos_moradia", "gastos_alimentacao", "gastos_transporte", "gastos_educacao",
-        "gastos_saude", "gastos_lazer", "gastos_contas", "outros_gastos",
-    ))
+    expenses = sum(
+        Decimal(str(profile[key]))
+        for key in (
+            "gastos_moradia",
+            "gastos_alimentacao",
+            "gastos_transporte",
+            "gastos_educacao",
+            "gastos_saude",
+            "gastos_lazer",
+            "gastos_contas",
+            "outros_gastos",
+        )
+    )
     income = Decimal(str(profile["renda_mensal"]))
     available = max(Decimal("0"), income - expenses)
     investments = None
@@ -121,10 +150,15 @@ def profile_for_ai(user, profile):
         }
 
     return {
-        "nome": user["nome"], "renda_mensal": float(income), "gastos_mensais": float(expenses),
+        "nome": user["nome"],
+        "renda_mensal": float(income),
+        "gastos_mensais": float(expenses),
         "reserva_emergencia": float(profile["reserva_emergencia"]),
-        "possui_dividas": bool(profile["possui_dividas"]), "dividas": float(profile["valor_dividas"]),
-        "valor_disponivel_investimento": float(available), "objetivo_financeiro": profile["objetivo_financeiro"],
-        "objetivo_outro": profile.get("objetivo_outro"), "tolerancia_risco": profile["tolerancia_risco"],
+        "possui_dividas": bool(profile["possui_dividas"]),
+        "dividas": float(profile["valor_dividas"]),
+        "valor_disponivel_investimento": float(available),
+        "objetivo_financeiro": profile["objetivo_financeiro"],
+        "objetivo_outro": profile.get("objetivo_outro"),
+        "tolerancia_risco": profile["tolerancia_risco"],
         "investimentos": investments,
     }

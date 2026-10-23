@@ -8,7 +8,7 @@ const fields = {
     gastos_educacao: "Educação (R$)",
     gastos_saude: "Saúde (R$)",
     gastos_lazer: "Lazer (R$)",
-    outros_gastos: "Outros gastos (R$)"
+    outros_gastos: "Outros gastos (R$)",
 };
 
 const objectives = {
@@ -18,7 +18,7 @@ const objectives = {
     viajar: "Viajar",
     aposentadoria: "Aposentadoria",
     aumentar_patrimonio: "Aumentar patrimônio",
-    outro: "Outro"
+    outro: "Outro",
 };
 
 // Evita pedir valores que não fazem sentido quando dívida ou investimento não foram marcados.
@@ -42,7 +42,10 @@ function toggleConditional() {
 // Reconstrói os campos e preenche os valores persistidos antes de permitir a edição.
 function fillProfile(profile = {}) {
     $("#expense-fields").innerHTML = Object.entries(fields)
-        .map(([name, label]) => `<label>${label}<input name="${name}" type="number" min="0" step="0.01" ${name === "renda_mensal" ? "required" : ""}></label>`)
+        .map(
+            ([name, label]) =>
+                `<label>${label}<input name="${name}" type="number" min="0" step="0.01" ${name === "renda_mensal" ? "required" : ""}></label>`
+        )
         .join("");
 
     $("#objective").innerHTML = Object.entries(objectives)
@@ -52,9 +55,7 @@ function fillProfile(profile = {}) {
     Object.entries(profile).forEach(([key, value]) => {
         const input = $(`[name="${key}"]`);
         if (input) {
-            input.type === "checkbox" 
-                ? (input.checked = Boolean(value)) 
-                : (input.value = value ?? "");
+            input.type === "checkbox" ? (input.checked = Boolean(value)) : (input.value = value ?? "");
         }
     });
 
@@ -63,7 +64,7 @@ function fillProfile(profile = {}) {
 
 // Converte os números do formulário antes de enviá-los, para preservar o contrato JSON da API.
 document.addEventListener("DOMContentLoaded", async () => {
-    if (!await initAuthenticatedPage()) return;
+    if (!(await initAuthenticatedPage())) return;
 
     const form = $("#profile-form");
     fillProfile((await api("/api/profile")).profile || {});
@@ -94,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const result = await api("/api/profile", {
                 method: "PUT",
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
             });
             showNotice(result.message);
         } catch (error) {

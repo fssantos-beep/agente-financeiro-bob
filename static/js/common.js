@@ -2,6 +2,13 @@
 const $ = (selector) => document.querySelector(selector);
 const money = (value) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value || 0);
 
+// Escapa os caracteres especiais do HTML, para mostrar com segurança um texto que veio do usuário ou do modelo.
+const escapeHtml = (text) =>
+    String(text ?? "").replace(
+        /[&<>"']/g,
+        (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]
+    );
+
 async function api(url, options = {}) {
     // Todas as telas usam este ponto único para falar com a API JSON do FastAPI.
     const response = await fetch(url, {

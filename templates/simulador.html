@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Simulador | Bob</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <main id="app-view">
+        <!-- Navegação compartilhada entre as áreas protegidas da aplicação. -->
+        <aside class="sidebar">
+            <a class="logo" href="/dashboard">
+                <span class="brand-mark">B</span> Bob
+            </a>
+            <nav>
+                <a class="nav-link" href="/dashboard">⌂ <span>Visão geral</span></a>
+                <a class="nav-link" href="/perfil">◎ <span>Perfil financeiro</span></a>
+                <a class="nav-link active" href="/simulador">↗ <span>Simulador</span></a>
+                <a class="nav-link" href="/chat">✦ <span>Conversar com Bob</span></a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div id="user-name" class="user-chip"></div>
+                <button id="logout" class="ghost">Sair</button>
+            </div>
+        </aside>
+
+        <section class="content">
+            <header>
+                <button id="menu-toggle" class="menu" aria-label="Abrir menu">☰</button>
+                <div>
+                    <p class="eyebrow">BOB — ASSISTENTE FINANCEIRO</p>
+                    <h2>Simulador</h2>
+                </div>
+            </header>
+            <div id="app-notice" role="alert"></div>
+            <section class="page">
+                <div class="section-heading">
+                    <p class="eyebrow">E SE EU INVESTIR?</p>
+                    <h1>Simulador de investimentos</h1>
+                    <p>Veja quanto você teria ao final do prazo, já descontando o imposto de renda.</p>
+                    <p id="sim-taxas" class="sim-note"></p>
+                </div>
+
+                <!-- Os campos começam com os dados do perfil; a caixa libera a edição sem alterar o perfil salvo. -->
+                <form id="sim-form" class="profile-form">
+                    <fieldset>
+                        <legend>Dados da simulação</legend>
+                        <div class="form-grid">
+                            <label class="full check">Alterar os dados do meu perfil para simular outro cenário
+                                <input name="editar" type="checkbox">
+                            </label>
+                            <label>Valor inicial (R$)
+                                <input name="valor_inicial" type="number" min="0" step="0.01" required>
+                            </label>
+                            <label>Aporte mensal (R$)
+                                <input name="aporte_mensal" type="number" min="0" step="0.01" required>
+                            </label>
+                            <label>Prazo (meses)
+                                <input name="meses" type="number" min="1" max="600" step="1" required>
+                            </label>
+                            <label>Tolerância a risco
+                                <select name="tolerancia_risco">
+                                    <option value="conservador">Conservador</option>
+                                    <option value="moderado">Moderado</option>
+                                    <option value="arrojado">Arrojado</option>
+                                </select>
+                            </label>
+                            <label>Inflação anual estimada (%) — opcional
+                                <input name="inflacao_anual_pct" type="number" min="0" max="100" step="0.1"
+                                    placeholder="Ex.: 4,5">
+                            </label>
+                        </div>
+                        <small id="sim-origem"></small>
+                    </fieldset>
+                    <button class="primary">Simular</button>
+                </form>
+
+                <p id="sim-vazio" class="sim-note">Ajuste os dados acima e clique em <strong>Simular</strong> para ver a
+                    comparação entre os produtos.</p>
+
+                <!-- Os resultados são montados por simulador.js a partir do cálculo feito no servidor. -->
+                <section id="sim-resultado" class="sim-stack" hidden>
+                    <section class="panel">
+                        <h3>Comparação entre os produtos</h3>
+                        <p id="sim-resumo" class="sim-note"></p>
+                        <div id="grafico-barras"></div>
+                        <div class="table-wrap">
+                            <table id="sim-tabela" class="sim-table"></table>
+                        </div>
+                        <p class="sim-note">O selo "Melhor retorno conhecido" considera só produtos de rentabilidade
+                            conhecida. Os de rentabilidade variável vêm depois porque dependem de hipóteses: veja as
+                            colunas Pessimista e Otimista, pois risco maior significa resultado mais incerto, não
+                            retorno garantido.</p>
+                        <p id="sim-indisponiveis" class="sim-note"></p>
+                    </section>
+
+                    <section class="panel">
+                        <h3 id="detalhe-titulo"></h3>
+                        <div id="detalhe-cards" class="metrics"></div>
+                        <p id="detalhe-real" class="sim-note"></p>
+                        <h4 class="g-titulo">Evolução ao longo do tempo</h4>
+                        <p id="g-leitura" class="g-leitura"></p>
+                        <div id="grafico-evolucao"></div>
+                        <div class="table-wrap">
+                            <table id="detalhe-cenarios" class="sim-table"></table>
+                        </div>
+                    </section>
+
+                    <!-- O Bob recebe os parâmetros desta simulação e o produto selecionado; o servidor recalcula os números. -->
+                    <section class="panel">
+                        <h3>Pergunte ao Bob sobre esta simulação</h3>
+                        <p class="sim-note">O Bob enxerga os números desta tela e o produto que você selecionou. Ele
+                            explica e opina, mas não garante rentabilidade.</p>
+                        <div id="sim-chat-messages" class="chat-messages sim-chat-messages"></div>
+                        <div id="sim-sugestoes" class="sim-chips"></div>
+                        <form id="sim-chat-form" class="chat-input">
+                            <textarea id="sim-chat-text" placeholder="Ex.: Por que o IR é diferente entre os produtos?"
+                                rows="1" maxlength="4000"></textarea>
+                            <button class="primary">Enviar ↑</button>
+                        </form>
+                    </section>
+
+                    <section class="panel">
+                        <h3>Premissas e limitações</h3>
+                        <ul id="sim-premissas" class="sim-list"></ul>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </main>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/conversas.js"></script>
+    <script src="/static/js/markdown.js"></script>
+    <script src="/static/js/graficos.js"></script>
+    <script src="/static/js/simulador.js"></script>
+</body>
+</html>

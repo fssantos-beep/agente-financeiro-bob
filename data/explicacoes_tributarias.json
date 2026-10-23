@@ -1,0 +1,56 @@
+{
+  "_sobre": "Explicações tributárias que o Bob usa para dizer POR QUE cada regra existe e PARA QUEM vale. As chaves são os ids de produtos_financeiros.json. Vão para o Bob: por_que, vale_para, nao_vale_para, base_legal e limitacao_do_simulador. Os demais campos (resumo, fonte, conferido_em, conferir) são documentação para o TCC.",
+  "tesouro_selic": {
+    "resumo": "IR pela tabela regressiva, só sobre o rendimento; a taxa de custódia da B3 é isenta até R$ 10.000.",
+    "por_que": "A tabela é regressiva: quanto mais tempo o dinheiro fica aplicado, menor a alíquota (de 22,5% para 15%), o que na prática premia quem mantém o investimento por mais tempo. A isenção da taxa de custódia até R$ 10.000 é uma regra da B3 para o Tesouro Selic.",
+    "vale_para": "pessoa física (o Tesouro Direto é um programa de venda de títulos públicos a pessoas físicas)",
+    "nao_vale_para": "empresas (regras diferentes, não simuladas)",
+    "base_legal": "Lei 11.033/2004, art. 1º (tabela do IR); tarifas de custódia da B3",
+    "limitacao_do_simulador": "O simulador não desconta a taxa de custódia da B3 (0,20% ao ano acima de R$ 10.000).",
+    "fonte": ["Guia do Investidor do Tesouro Direto", "b3.com.br (tarifas do Tesouro Direto)", "Lei 11.033/2004"],
+    "conferido_em": "2026-10-19"
+  },
+  "cdb_liquidez_diaria": {
+    "resumo": "IR pela tabela regressiva, só sobre o rendimento; IOF só se resgatar em menos de 30 dias.",
+    "por_que": "Vale a mesma tabela regressiva do Tesouro: de 22,5% (até 180 dias) a 15% (acima de 720 dias), então o tempo aplicado reduz a alíquota. O IOF é um imposto extra cobrado apenas quando o resgate acontece em menos de 30 dias, com alíquota que cai a cada dia até zerar.",
+    "vale_para": "pessoa física",
+    "nao_vale_para": "empresas (regras diferentes, não simuladas)",
+    "base_legal": "Lei 11.033/2004, art. 1º (IR); tabela regressiva do IOF (decreto do IOF)",
+    "limitacao_do_simulador": "O simulador não considera o IOF de resgates com menos de 30 dias.",
+    "fonte": ["Guia do Investidor do Tesouro Direto (tabela regressiva)", "Lei 11.033/2004"],
+    "conferido_em": "2026-10-19"
+  },
+  "lci_lca": {
+    "resumo": "Rendimento isento de imposto de renda para pessoa física; também isento de IOF.",
+    "por_que": "A lei isenta de IR o rendimento de LCI e LCA de quem é pessoa física como um incentivo: o dinheiro captado financia crédito imobiliário (LCI) e do agronegócio (LCA), dois setores que o governo quer estimular. Por isso o governo abre mão do imposto de quem empresta para esses setores.",
+    "vale_para": "pessoa física",
+    "nao_vale_para": "pessoa jurídica: a empresa não tem essa isenção e paga IR pela tabela regressiva (este simulador não cobre empresas)",
+    "base_legal": "Lei 11.033/2004, art. 3º (incisos II e IV)",
+    "fonte": [
+      "Lei 11.033/2004, art. 3º",
+      "Daycoval (blog): tributação de LCI e LCA",
+      "Nord Investimentos (blog): LCA e renda fixa"
+    ],
+    "conferido_em": "2026-10-19",
+    "conferir": "A MP 1.303/2025 propôs mudar essa isenção, mas perdeu a validade em outubro de 2025; a checagem de 19/10/2026 indicou a isenção mantida. Reconfirme antes de entregar o TCC."
+  },
+  "fundo_multimercado": {
+    "resumo": "Come-cotas (antecipação semestral do IR, em maio e novembro, de 15% ou 20%) mais ajuste na tabela regressiva no resgate.",
+    "por_que": "O come-cotas é uma cobrança antecipada de IR feita nos últimos dias úteis de maio e novembro, tirando cotas do investidor, em vez de esperar o resgate. No resgate, o que faltar para completar a alíquota da tabela regressiva é cobrado. Como parte do imposto sai antes, o dinheiro rende menos ao longo do tempo do que renderia sem a antecipação.",
+    "vale_para": "pessoa física",
+    "nao_vale_para": "empresas (regras diferentes, não simuladas)",
+    "limitacao_do_simulador": "O simulador NÃO calcula o come-cotas: usa só a tabela regressiva no resgate, então o valor líquido real tende a ficar um pouco abaixo do mostrado.",
+    "fonte": ["adrianofreire.com.br (come-cotas)", "acionista.com.br (come-cotas)"],
+    "conferido_em": "2026-10-19",
+    "conferir": "Citar o artigo exato da lei (a Lei 14.754/2023 alterou a tributação de fundos) antes de usar no TCC."
+  },
+  "fundo_acoes": {
+    "resumo": "15% fixos sobre o rendimento, cobrados só no resgate; não tem come-cotas.",
+    "por_que": "Fundos de ações (que aplicam mais de 67% da carteira em ações) têm regra própria: não sofrem o come-cotas semestral e pagam alíquota fixa de 15% apenas quando o investidor resgata, em qualquer prazo. Por isso o imposto só aparece no resgate e o dinheiro continua rendendo por inteiro até lá.",
+    "vale_para": "pessoa física",
+    "nao_vale_para": "empresas (regras diferentes, não simuladas)",
+    "fonte": ["adrianofreire.com.br (come-cotas)", "acionista.com.br (come-cotas)"],
+    "conferido_em": "2026-10-19",
+    "conferir": "Confirmar o enquadramento (mais de 67% em ações) no regulamento do fundo e citar o artigo da lei de tributação de fundos."
+  }
+}

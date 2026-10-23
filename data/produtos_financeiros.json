@@ -1,42 +1,107 @@
 [
   {
+    "id": "tesouro_selic",
     "nome": "Tesouro Selic",
     "categoria": "renda_fixa",
+    "subcategoria": "titulo_publico",
     "risco": "baixo",
-    "rentabilidade": "100% da Selic",
-    "aporte_minimo": 30.00,
-    "indicado_para": "Reserva de emergência e iniciantes"
+    "rentabilidade": "100% da Selic + pequena taxa (atualmente ~13,75% a.a.)",
+    "aporte_minimo": 30.0,
+    "liquidez": "D+1",
+    "garantia": "Tesouro Nacional (risco soberano)",
+    "tributacao": {
+      "tipo": "regressivo",
+      "aliquotas": {
+        "ate_180_dias": "22.5%",
+        "181_360_dias": "20%",
+        "361_720_dias": "17.5%",
+        "acima_720_dias": "15%"
+      },
+      "taxa_custodia_b3": "0.20% a.a. (isenta até R$ 10.000)"
+    },
+    "indicado_para": ["reserva_emergencia", "iniciantes", "liquidez_alta"],
+    "horizonte": "curto_prazo",
+    "observacoes": "Maior segurança do mercado. Ideal para reserva de emergência."
   },
   {
+    "id": "cdb_liquidez_diaria",
     "nome": "CDB Liquidez Diária",
     "categoria": "renda_fixa",
+    "subcategoria": "cdb",
     "risco": "baixo",
-    "rentabilidade": "102% do CDI",
-    "aporte_minimo": 100.00,
-    "indicado_para": "Quem busca segurança com rendimento diário"
+    "rentabilidade": "Geralmente 100% a 110% do CDI (CDI atual ~13,65% a.a.)",
+    "aporte_minimo": 100.0,
+    "liquidez": "D+0 ou D+1",
+    "garantia": "FGC até R$ 250.000 por CPF por instituição",
+    "tributacao": {
+      "tipo": "regressivo",
+      "aliquotas": {
+        "ate_180_dias": "22.5%",
+        "181_360_dias": "20%",
+        "361_720_dias": "17.5%",
+        "acima_720_dias": "15%"
+      },
+      "iof": "Cobra se resgatar antes de 30 dias"
+    },
+    "indicado_para": ["reserva_emergencia", "rendimento_diario", "seguranca"],
+    "horizonte": "curto_prazo",
+    "observacoes": "Compare sempre o % do CDI líquido de IR. Bancos médios costumam pagar mais."
   },
   {
-    "nome": "LCI/LCA",
+    "id": "lci_lca",
+    "nome": "LCI / LCA",
     "categoria": "renda_fixa",
+    "subcategoria": "letras_credito",
     "risco": "baixo",
-    "rentabilidade": "95% do CDI",
-    "aporte_minimo": 1000.00,
-    "indicado_para": "Quem pode esperar 90 dias (isento de IR)"
+    "rentabilidade": "Geralmente 85% a 95% do CDI (isento de IR)",
+    "aporte_minimo": 1000.0,
+    "liquidez": "Carência mínima de 6 meses (após isso alguns têm liquidez diária)",
+    "garantia": "FGC até R$ 250.000 por CPF por instituição",
+    "tributacao": {
+      "tipo": "isento",
+      "ir": "Isento para pessoa física",
+      "iof": "Isento"
+    },
+    "indicado_para": ["medio_prazo", "isencao_ir", "seguranca"],
+    "horizonte": "medio_prazo",
+    "observacoes": "A isenção de IR faz 90% do CDI isento ser competitivo com CDBs de 105-110%."
   },
   {
+    "id": "fundo_multimercado",
     "nome": "Fundo Multimercado",
     "categoria": "fundo",
+    "subcategoria": "multimercado",
     "risco": "medio",
-    "rentabilidade": "CDI + 2%",
-    "aporte_minimo": 500.00,
-    "indicado_para": "Perfil moderado que busca diversificação"
+    "rentabilidade": "Variável (meta comum: CDI + 1% a 3%)",
+    "aporte_minimo": 500.0,
+    "liquidez": "D+1 a D+30",
+    "garantia": "Sem garantia (risco do gestor e dos ativos)",
+    "tributacao": {
+      "tipo": "come_cotas + regressivo",
+      "come_cotas": "Maio e novembro (15% ou 20%)",
+      "resgate": "Tabela regressiva (15% a 22,5%)"
+    },
+    "indicado_para": ["perfil_moderado", "diversificacao"],
+    "horizonte": "medio_longo_prazo",
+    "observacoes": "Sofre come-cotas. Analise taxa de administração e histórico de longo prazo."
   },
   {
+    "id": "fundo_acoes",
     "nome": "Fundo de Ações",
     "categoria": "fundo",
+    "subcategoria": "acoes",
     "risco": "alto",
-    "rentabilidade": "Variável",
-    "aporte_minimo": 100.00,
-    "indicado_para": "Perfil arrojado com foco no longo prazo"
+    "rentabilidade": "Variável (acompanha o mercado de ações + alpha do gestor)",
+    "aporte_minimo": 100.0,
+    "liquidez": "D+1 a D+4",
+    "garantia": "Sem garantia",
+    "tributacao": {
+      "tipo": "fixo",
+      "aliquota": "15% apenas no resgate",
+      "come_cotas": "Não tem"
+    },
+    "indicado_para": ["perfil_arrojado", "longo_prazo"],
+    "horizonte": "longo_prazo",
+    "observacoes": "Vantagem tributária no longo prazo por não ter come-cotas. Exige tolerância a volatilidade."
   }
 ]

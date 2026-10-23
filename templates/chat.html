@@ -16,6 +16,7 @@
             <nav>
                 <a class="nav-link" href="/dashboard">⌂ <span>Visão geral</span></a>
                 <a class="nav-link" href="/perfil">◎ <span>Perfil financeiro</span></a>
+                <a class="nav-link" href="/simulador">↗ <span>Simulador</span></a>
                 <a class="nav-link active" href="/chat">✦ <span>Conversar com Bob</span></a>
             </nav>
             <div class="sidebar-bottom">
@@ -32,7 +33,7 @@
                 </div>
             </header>
             <div id="app-notice" role="alert"></div>
-            
+
             <!-- A área cresce para ocupar a tela e o formulário fica no final da conversa. -->
             <section class="page chat-page">
                 <div class="chat-intro">
@@ -42,13 +43,16 @@
                 </div>
                 <div id="chat-messages" class="chat-messages"></div>
                 <form id="chat-form" class="chat-input">
-                    <textarea id="chat-text" placeholder="Digite sua pergunta financeira..." rows="1" maxlength="4000"></textarea>
+                    <textarea id="chat-text" placeholder="Digite sua pergunta financeira..." rows="1"
+                        maxlength="4000"></textarea>
                     <button class="primary">Enviar ↑</button>
                 </form>
             </section>
         </section>
     </main>
     <script src="/static/js/common.js"></script>
+    <script src="/static/js/conversas.js"></script>
+    <script src="/static/js/markdown.js"></script>
     <script src="/static/js/chat.js"></script>
 </body>
 </html>

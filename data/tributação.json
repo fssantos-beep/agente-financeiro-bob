@@ -1,0 +1,50 @@
+{
+  "renda_fixa": {
+    "descricao": "CDB, Tesouro Direto, Debêntures etc.",
+    "aliquotas_regressivas": [
+      { "prazo": "Até 180 dias", "aliquota": "22,5%" },
+      { "prazo": "181 a 360 dias", "aliquota": "20%" },
+      { "prazo": "361 a 720 dias", "aliquota": "17,5%" },
+      { "prazo": "Acima de 720 dias", "aliquota": "15%" }
+    ],
+    "iof": "Cobra se resgate antes de 30 dias (tabela regressiva)"
+  },
+  "lci_lca": {
+    "descricao": "Letras de Crédito Imobiliário e do Agronegócio",
+    "ir": "Isento para pessoa física",
+    "iof": "Isento",
+    "carencia_minima": "6 meses (pós-fixadas e prefixadas)"
+  },
+  "fundos": {
+    "multimercado_renda_fixa": {
+      "come_cotas": "Último dia útil de maio e novembro",
+      "aliquota_come_cotas": "15% (longo prazo) ou 20% (curto prazo)",
+      "resgate": "Tabela regressiva"
+    },
+    "fundo_acoes": {
+      "come_cotas": "Não tem",
+      "aliquota": "15% apenas no resgate"
+    }
+  },
+  "acoes": {
+    "ganho_capital": {
+      "isencao": "Vendas até R$ 20.000 no mês",
+      "aliquota": "15% (operações comuns) / 20% (day trade)"
+    }
+  },
+  "criptomoedas": {
+    "regime_nacional": {
+      "isencao": "Vendas totais até R$ 35.000 no mês",
+      "aliquotas": [
+        { "faixa": "Até R$ 5 milhões", "aliquota": "15%" },
+        { "faixa": "R$ 5 mi a R$ 10 mi", "aliquota": "17,5%" },
+        { "faixa": "R$ 10 mi a R$ 30 mi", "aliquota": "20%" },
+        { "faixa": "Acima de R$ 30 mi", "aliquota": "22,5%" }
+      ]
+    },
+    "regime_exterior": {
+      "isencao": "Não tem",
+      "aliquota": "15% sobre o ganho (apuração anual)"
+    }
+  }
+}

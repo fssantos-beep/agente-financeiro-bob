@@ -1,0 +1,4 @@
+# O HTML dos templates é formatado pelo próprio VS Code (Shift+Alt+F), não pelo prettier.
+templates/
+.venv/
+docs/

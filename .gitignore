@@ -1,6 +1,23 @@
+# Arquivos de configuração e ambientes virtuais
 .env
 .venv/
+
+# Python
 __pycache__/
 *.pyc
+.ruff_cache/
+.pytest_cache/
+
+# Arquivos do sistema e do editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+
+# Arquivos de log e cache
+*.log
+bob_taxas_cache.json
+
+# Anotações pessoais
 melhoria.txt
 execucao.txt

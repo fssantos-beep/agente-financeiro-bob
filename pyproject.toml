@@ -1,0 +1,11 @@
+# Padrão de formatação do projeto. Rode "black ." e "ruff check --fix ." na raiz para aplicar.
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+# F = erros e imports não usados (pyflakes), I = ordem dos imports
+select = ["F", "I"]

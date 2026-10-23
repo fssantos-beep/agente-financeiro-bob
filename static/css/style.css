@@ -17,7 +17,11 @@ body {
     margin: 0;
     color: var(--ink);
     background: var(--paper);
-    font: 15px/1.5 Inter, system-ui, -apple-system, sans-serif;
+    font:
+        15px/1.5 Inter,
+        system-ui,
+        -apple-system,
+        sans-serif;
 }
 
 button,
@@ -34,7 +38,7 @@ button {
 .auth-shell {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 1.1fr .9fr;
+    grid-template-columns: 1.1fr 0.9fr;
     background: linear-gradient(125deg, var(--deep), #096349);
     color: #fff;
 }
@@ -49,7 +53,7 @@ button {
 
 .brand h1 {
     font-size: clamp(4rem, 10vw, 8rem);
-    line-height: .9;
+    line-height: 0.9;
     margin: 20px 0;
 }
 
@@ -143,7 +147,7 @@ textarea:focus {
     padding: 12px 17px;
     font-weight: 700;
     box-shadow: 0 6px 15px #087a5733;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .primary:hover {
@@ -152,7 +156,7 @@ textarea:focus {
 }
 
 .primary:disabled {
-    opacity: .6;
+    opacity: 0.6;
     cursor: wait;
     transform: none;
 }
@@ -262,9 +266,9 @@ header h2 {
 }
 
 .eyebrow {
-    font-size: .72rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: .11em;
+    letter-spacing: 0.11em;
     color: var(--green);
     margin: 0 0 4px;
 }
@@ -315,7 +319,7 @@ fieldset {
 
 .metric .label {
     color: var(--muted);
-    font-size: .85rem;
+    font-size: 0.85rem;
 }
 
 .metric strong {
@@ -352,7 +356,7 @@ fieldset {
     grid-template-columns: 120px 1fr 70px;
     align-items: center;
     gap: 10px;
-    font-size: .82rem;
+    font-size: 0.82rem;
 }
 
 .bar {
@@ -490,7 +494,7 @@ legend {
 
     .sidebar {
         transform: translateX(-100%);
-        transition: .25s;
+        transition: 0.25s;
         z-index: 2;
     }
 
@@ -529,4 +533,381 @@ legend {
     .chat-page {
         height: calc(100vh - 90px);
     }
+}
+/* Simulador: tabelas de comparação, selos e lista de premissas. */
+.sim-stack {
+    display: grid;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.sim-stack[hidden],
+.panel[hidden] {
+    display: none;
+}
+
+.panel h3 {
+    margin: 0 0 6px;
+}
+
+.sim-note {
+    color: var(--muted);
+    margin: 6px 0 14px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.sim-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.sim-table th,
+.sim-table td {
+    text-align: left;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.sim-table th {
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.sim-table tr[data-i] {
+    cursor: pointer;
+}
+
+.sim-table tr[data-i]:hover,
+.sim-table tr.selected {
+    background: var(--mint);
+}
+
+.badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--deep);
+    background: var(--mint);
+}
+
+.badge.warn {
+    background: #fff1cc;
+    color: #7a5600;
+}
+
+.sim-list {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--muted);
+    display: grid;
+    gap: 6px;
+}
+
+.sim-table tr.selected .badge {
+    background: #fff;
+}
+
+@media (max-width: 780px) {
+    .sim-table th,
+    .sim-table td {
+        padding: 9px 8px;
+    }
+}
+
+/* Simulador: conversa com o Bob na própria tela. */
+.sim-chat-messages {
+    flex: none;
+    min-height: 90px;
+    max-height: 380px;
+}
+
+.sim-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.chip {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--deep);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.chip:hover {
+    background: var(--mint);
+}
+
+.chip:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+/* Simulador: gráficos em SVG (barras de comparação e evolução no tempo). */
+.grafico {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: pan-y;
+}
+
+.g-titulo {
+    margin: 22px 0 4px;
+    font-size: 1rem;
+}
+
+.g-leitura {
+    min-height: 3em;
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.g-nome {
+    font-size: 13px;
+    font-weight: 700;
+    fill: var(--ink);
+}
+.g-sub {
+    font-size: 11px;
+    fill: var(--muted);
+}
+.g-valor {
+    font-size: 12px;
+    font-weight: 700;
+    fill: var(--ink);
+}
+.g-eixo {
+    font-size: 11px;
+    fill: var(--muted);
+}
+.g-grade {
+    stroke: var(--line);
+    stroke-width: 1;
+}
+
+.g-linha {
+    cursor: pointer;
+    outline: none;
+}
+.g-fundo-linha {
+    fill: transparent;
+}
+.g-linha:hover .g-fundo-linha,
+.g-linha:focus-visible .g-fundo-linha {
+    fill: var(--mint);
+    opacity: 0.5;
+}
+.g-linha.sel .g-fundo-linha {
+    fill: var(--mint);
+    opacity: 0.85;
+}
+
+.g-barra {
+    fill: var(--green);
+}
+.g-barra-var {
+    stroke: var(--green);
+    stroke-width: 1.5;
+} /* o preenchimento listrado vem do atributo fill do SVG */
+.g-listra-a {
+    fill: var(--mint);
+}
+.g-listra-b {
+    fill: var(--green);
+}
+.g-faixa {
+    fill: rgba(20, 35, 31, 0.07);
+    stroke: var(--ink);
+    stroke-width: 1.6;
+}
+.g-faixa-texto {
+    font-size: 11px;
+    fill: var(--muted);
+}
+.g-invest {
+    stroke: var(--muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+}
+.g-invest-texto {
+    font-size: 11px;
+    fill: var(--muted);
+}
+
+.g-banda {
+    fill: var(--green);
+    opacity: 0.16;
+}
+.g-l-base {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+.g-l-borda {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 1.2;
+    opacity: 0.55;
+}
+.g-l-invest {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 2;
+    stroke-dasharray: 6 5;
+}
+.g-guia {
+    stroke: var(--ink);
+    stroke-width: 1;
+    opacity: 0.45;
+}
+.g-ponto-base {
+    fill: var(--green);
+    stroke: #fff;
+    stroke-width: 2;
+}
+.g-ponto-invest {
+    fill: var(--muted);
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.g-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 10px 0 18px;
+    padding: 0;
+    list-style: none;
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.g-chave {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    width: 18px;
+}
+.g-chave-barra {
+    height: 10px;
+    border-radius: 2px;
+    background: var(--green);
+}
+.g-chave-listra {
+    height: 10px;
+    border: 1px solid var(--green);
+    background: repeating-linear-gradient(45deg, var(--green) 0 3px, var(--mint) 3px 6px);
+}
+.g-chave-faixa {
+    height: 12px;
+    border: 1.6px solid var(--ink);
+    border-radius: 4px;
+    background: rgba(20, 35, 31, 0.07);
+}
+.g-chave-invest {
+    height: 0;
+    border-top: 2px dashed var(--muted);
+}
+.g-chave-linha {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--green);
+}
+.g-chave-banda {
+    height: 10px;
+    background: rgba(8, 122, 87, 0.16);
+    border: 1px solid rgba(8, 122, 87, 0.5);
+}
+
+/* Respostas do Bob formatadas em Markdown (veja markdown.js). */
+.message.md {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.message.md > :first-child {
+    margin-top: 0;
+}
+.message.md > :last-child {
+    margin-bottom: 0;
+}
+.message.md p {
+    margin: 0 0 9px;
+}
+.message.md .md-titulo {
+    margin-top: 12px;
+}
+.message.md ul,
+.message.md ol {
+    margin: 4px 0 9px;
+    padding-left: 22px;
+}
+.message.md li {
+    margin: 2px 0;
+}
+.message.md hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 12px 0;
+}
+
+.message.md code {
+    padding: 1px 5px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+    font-size: 0.88em;
+}
+
+.message.md pre {
+    margin: 6px 0 10px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    white-space: pre;
+}
+
+.message.md pre code {
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+.md-tabela {
+    margin: 6px 0 10px;
+    overflow-x: auto;
+}
+
+.message.md table {
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.message.md th,
+.message.md td {
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    vertical-align: top;
+}
+
+.message.md th {
+    background: var(--paper);
+    font-weight: 700;
 }
